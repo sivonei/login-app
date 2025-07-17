@@ -1,15 +1,17 @@
-# Base image
+# Imagem base
 FROM python:3.9-slim
 
-# Set work directory
+# Diretório de trabalho
 WORKDIR /app
 
-# Install dependencies
+# Copiar arquivos
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy app code
 COPY . .
 
-# Run the app
+# Porta da aplicação
+EXPOSE 5000
+
+# Comando de inicialização
 CMD ["python", "app.py"]

@@ -4,10 +4,10 @@ Este é um projeto simples de uma página de login em Flask. Foi criado para est
 
 ## Etapas
 
-- [x] Aplicação Flask com tela de login
-- [x] Dockerização da aplicação
-- [x] Pipeline de build com Jenkins
-- [ ] Deploy com Kubernetes (em breve)
+-  Aplicação Flask com tela de login
+-  Dockerização da aplicação
+-  Pipeline de build com Jenkins
+-  Deploy com Kubernetes (em breve)
 
 ## Como executar
 
