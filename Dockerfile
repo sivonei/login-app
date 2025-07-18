@@ -1,17 +1,20 @@
-# Imagem base
+# Use official Python runtime as base image
 FROM python:3.9-slim
 
-# Diretório de trabalho
+# Set working directory in container
 WORKDIR /app
 
-# Copiar arquivos
+# Copy requirements file first to leverage Docker cache
 COPY requirements.txt .
-RUN pip install -r requirements.txt
 
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
 COPY . .
 
-# Porta da aplicação
+# Expose application port
 EXPOSE 5000
 
-# Comando de inicialização
+# Command to run the application
 CMD ["python", "app.py"]

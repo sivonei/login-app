@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login-app
+spec:
+  replicas: 1  # Number of pod replicas
+  selector:
+    matchLabels:
+      app: login-app  # Selects pods with this label
+  template:
+    metadata:
+      labels:
+        app: login-app  # Pod template labels
+    spec:
+      containers:
+      - name: app  # Container name
+        image: login-app  # Local image name
+        imagePullPolicy: Never  # Never pull from external registry
+        ports:
+        - containerPort: 5000  # Application port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login-app  # Service name
+spec:
+  type: LoadBalancer  # Expose externally (for Minikube testing)
+  ports:
+  - port: 80  # External port
+    targetPort: 5000  # Container port
+  selector:
+    app: login-app  # Selects pods to expose

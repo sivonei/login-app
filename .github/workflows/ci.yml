@@ -1,0 +1,23 @@
+name: CI/CD Pipeline
+
+on: [push]  # Trigger on push events
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # GitHub-hosted runner
+    
+    steps:
+    # Checkout repository code
+    - uses: actions/checkout@v2
+    
+    # Set up Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    # Build Docker image
+    - name: Build Docker image
+      run: docker build -t login-app .
+    
+    # Validate Kubernetes manifests
+    - name: Test Kubernetes manifests
+      run: kubectl kustomize ./k8s/  # Validates YAML syntax
