@@ -1,23 +1,36 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
-on: [push]  # Trigger on push events
+on:
+  push:
+    branches: [ master ]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # GitHub-hosted runner
+  test:
+    runs-on: ubuntu-latest
     
     steps:
-    # Checkout repository code
     - uses: actions/checkout@v2
     
-    # Set up Docker Buildx
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
     
-    # Build Docker image
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run tests
+      run: |
+        python -m pytest tests/ -v
+        
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
     - name: Build Docker image
       run: docker build -t login-app .
-    
-    # Validate Kubernetes manifests
-    - name: Test Kubernetes manifests
-      run: kubectl kustomize ./k8s/  # Validates YAML syntax

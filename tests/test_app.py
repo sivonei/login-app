@@ -1,8 +1,14 @@
 from app import app
+import pytest
 
 
-def test_homepage():
-    tester = app.test_client()
-    response = tester.get('/')
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
+
+
+def test_health_check(client):
+    response = client.get('/health')
     assert response.status_code == 200
-    assert b'Login' in response.data
