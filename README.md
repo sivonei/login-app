@@ -28,14 +28,15 @@ These users are for testing purposes only:
 | admin    | admin      |
 
 
-## How to Run 1 
+## How to Run 1 (Script)
 Download deploy.sh and run it:
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
+```
 
-
-## How to Run 2
+## How to Run 2 (Manual Steps)
+### Prerequisites
 
 ### Docker
 
@@ -81,14 +82,21 @@ Every push to GitHub triggers a pipeline that:
 ```
 login-app/
 ├── app.py
-├── test_app.py
+├── deploy.sh
+├── tests/
+│   ├── __init__.py
+│   └── test_app.py
+├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── ci.yml
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
 ├── k8s/
 │   ├── deployment.yaml
 │   ├── service.yaml
-│   └── kustomization.yaml
+│   
 └── templates/
     ├── login.html
     └── users.html
